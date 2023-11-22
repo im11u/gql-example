@@ -1,0 +1,14 @@
+name: gql-example
+
+services:
+  db:
+    image: mysql:8.2
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./config/mysql.cnf:/etc/mysql/conf.d/custom.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: gql_example
+      MYSQL_USER: gql_user
+      MYSQL_PASSWORD: gqlpw
