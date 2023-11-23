@@ -1,0 +1,21 @@
+"""
+部署
+"""
+type Department {
+  id: ID!
+  name: String!
+  employees: [Employee!]!
+}
+
+"""
+従業員
+"""
+type Employee {
+  id: ID!
+  name: String!
+  department: Department!
+}
+
+type Query {
+  departments: [Department!]!
+}
