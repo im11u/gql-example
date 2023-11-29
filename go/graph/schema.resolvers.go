@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/im11u/gql-example/go/graph/generated"
 	"github.com/im11u/gql-example/go/graph/model"
@@ -14,7 +13,19 @@ import (
 
 // Departments is the resolver for the departments field.
 func (r *queryResolver) Departments(ctx context.Context) ([]*model.Department, error) {
-	panic(fmt.Errorf("not implemented: Departments - departments"))
+	// TODO
+	return []*model.Department{
+		{
+			ID:        "employee01",
+			Name:      "department01",
+			Employees: []*model.Employee{},
+		},
+		{
+			ID:        "employee02",
+			Name:      "department02",
+			Employees: []*model.Employee{},
+		},
+	}, nil
 }
 
 // Query returns generated.QueryResolver implementation.
