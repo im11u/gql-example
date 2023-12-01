@@ -5,6 +5,7 @@ go 1.21.4
 require (
 	github.com/99designs/gqlgen v0.17.40
 	github.com/gin-gonic/gin v1.9.1
+	github.com/go-sql-driver/mysql v1.7.1
 	github.com/vektah/gqlparser/v2 v2.5.10
 )
 
