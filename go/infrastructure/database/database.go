@@ -28,7 +28,3 @@ func Connect() (*sql.DB, error) {
 
 	return sql.Open("mysql", mc.FormatDSN())
 }
-
-func Close(db *sql.DB) error {
-	return db.Close()
-}

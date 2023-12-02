@@ -10,7 +10,7 @@ type Server interface {
 
 func NewServer() Server {
 	c := newConfig()
-	return &GinServer{config: c}
+	return NewGinServer(c)
 }
 
 type config struct {

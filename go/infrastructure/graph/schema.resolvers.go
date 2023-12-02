@@ -24,12 +24,12 @@ func (r *employeeResolver) Department(ctx context.Context, obj *domain.Employee)
 
 // Departments is the resolver for the departments field.
 func (r *queryResolver) Departments(ctx context.Context) ([]*domain.Department, error) {
-	panic(fmt.Errorf("not implemented: Departments - departments"))
+	return r.departmentAction.FindAll()
 }
 
 // Employees is the resolver for the employees field.
 func (r *queryResolver) Employees(ctx context.Context) ([]*domain.Employee, error) {
-	panic(fmt.Errorf("not implemented: Employees - employees"))
+	return r.employeeAction.FindAll()
 }
 
 // Department returns gen.DepartmentResolver implementation.
