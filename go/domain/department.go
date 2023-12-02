@@ -5,3 +5,7 @@ type Department struct {
 	ID   uint
 	Name string
 }
+
+type DepartmentRepository interface {
+	FindAll() ([]*Department, error)
+}

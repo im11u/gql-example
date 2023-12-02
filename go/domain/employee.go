@@ -5,3 +5,7 @@ type Employee struct {
 	ID   uint
 	Name string
 }
+
+type EmployeeRepository interface {
+	FindAll() ([]*Employee, error)
+}
