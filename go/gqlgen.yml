@@ -3,15 +3,20 @@ schema:
 
 exec:
   layout: follow-schema
-  dir: graph/generated
-  package: generated
-
-model:
-  filename: graph/model/models_gen.go
-  package: model
+  dir: infrastructure/graph/gen
+  package: gen
 
 resolver:
   layout: follow-schema
-  dir: graph
+  dir: infrastructure/graph
   package: graph
   filename_template: "{name}.resolvers.go"
+
+models:
+  ID:
+    model:
+      - github.com/99designs/gqlgen/graphql.Uint
+  Department:
+    model: github.com/im11u/gql-example/go/domain.Department
+  Employee:
+    model: github.com/im11u/gql-example/go/domain.Employee

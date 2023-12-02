@@ -5,8 +5,8 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/gin-gonic/gin"
 
-	"github.com/im11u/gql-example/go/graph"
-	"github.com/im11u/gql-example/go/graph/generated"
+	"github.com/im11u/gql-example/go/infrastructure/graph"
+	"github.com/im11u/gql-example/go/infrastructure/graph/gen"
 )
 
 type GinServer struct {
@@ -19,7 +19,7 @@ func (g *GinServer) Run() {
 }
 
 func (g *GinServer) graphqlHandler() gin.HandlerFunc {
-	h := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	h := handler.NewDefaultServer(gen.NewExecutableSchema(gen.Config{Resolvers: &graph.Resolver{}}))
 
 	return func(c *gin.Context) {
 		h.ServeHTTP(c.Writer, c.Request)

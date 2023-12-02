@@ -18,4 +18,5 @@ type Employee {
 
 type Query {
   departments: [Department!]!
+  employees: [Employee!]!
 }
