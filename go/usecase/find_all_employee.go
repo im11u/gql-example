@@ -10,15 +10,15 @@ type FindAllEmployeeUseCase interface {
 }
 
 func NewFindAllEmployeeUseCase(repo domain.EmployeeRepository) FindAllEmployeeUseCase {
-	return &FindAllEmployeeUseCaseImpl{
+	return &findAllEmployeeUseCase{
 		repo: repo,
 	}
 }
 
-type FindAllEmployeeUseCaseImpl struct {
+type findAllEmployeeUseCase struct {
 	repo domain.EmployeeRepository
 }
 
-func (uc *FindAllEmployeeUseCaseImpl) Execute() ([]*domain.Employee, error) {
+func (uc *findAllEmployeeUseCase) Execute() ([]*domain.Employee, error) {
 	return uc.repo.FindAll()
 }
