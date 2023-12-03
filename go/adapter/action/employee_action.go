@@ -9,19 +9,23 @@ import (
 )
 
 // 従業員に対するアクション
-type EmployeeAction struct {
+type EmployeeAction interface {
+	AllEmployees() ([]*domain.Employee, error)
+}
+
+type employeeAction struct {
 	findAllUseCase usecase.FindAllEmployeeUseCase
 }
 
-func NewEmployeeAction(db *sql.DB) *EmployeeAction {
+func newEmployeeAction(db *sql.DB) *employeeAction {
 	repo := repository.NewEmployeeGormRepository(db)
 
-	return &EmployeeAction{
+	return &employeeAction{
 		findAllUseCase: usecase.NewFindAllEmployeeUseCase(repo),
 	}
 }
 
 // すべての従業員を取得する
-func (a *EmployeeAction) FindAll() ([]*domain.Employee, error) {
+func (a *employeeAction) AllEmployees() ([]*domain.Employee, error) {
 	return a.findAllUseCase.Execute()
 }

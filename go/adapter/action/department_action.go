@@ -9,19 +9,23 @@ import (
 )
 
 // 部署に対するアクション
-type DepartmentAction struct {
+type DepartmentAction interface {
+	AllDepartments() ([]*domain.Department, error)
+}
+
+type departmentAction struct {
 	findAllUseCase usecase.FindAllDepartmentUseCase
 }
 
-func NewDepartmentAction(db *sql.DB) *DepartmentAction {
+func newDepartmentAction(db *sql.DB) *departmentAction {
 	repo := repository.NewDepartmentGormRepository(db)
 
-	return &DepartmentAction{
+	return &departmentAction{
 		findAllUseCase: usecase.NewFindAllDepartmentUseCase(repo),
 	}
 }
 
 // すべての部署を取得する
-func (a *DepartmentAction) FindAll() ([]*domain.Department, error) {
+func (a *departmentAction) AllDepartments() ([]*domain.Department, error) {
 	return a.findAllUseCase.Execute()
 }
