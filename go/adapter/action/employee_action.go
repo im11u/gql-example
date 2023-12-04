@@ -13,7 +13,7 @@ import (
 
 // 従業員に対するアクション
 type EmployeeAction interface {
-	AllEmployees() ([]*domain.Employee, error)
+	AllEmployees(ctx context.Context) ([]*domain.Employee, error)
 	LoadEmployees(ctx context.Context, departmentID uint) ([]*domain.Employee, error)
 }
 
@@ -36,7 +36,7 @@ func newEmployeeAction(db *sql.DB) *employeeAction {
 }
 
 // すべての従業員を取得する
-func (a *employeeAction) AllEmployees() ([]*domain.Employee, error) {
+func (a *employeeAction) AllEmployees(ctx context.Context) ([]*domain.Employee, error) {
 	return a.findAllUseCase.Execute()
 }
 
@@ -46,16 +46,11 @@ func (a *employeeAction) LoadEmployees(ctx context.Context, departmentID uint) (
 	return thunk()
 }
 
+// データローダを初期化する
 func (a *employeeAction) initLoader() {
 	batchFn := func(ctx context.Context, departmentIDs []uint) []*dataloader.Result[[]*domain.Employee] {
-		var results []*dataloader.Result[[]*domain.Employee]
-		employees, _ := a.findUseCase.Execute(departmentIDs)
-		for _, data := range employees {
-			results = append(results, &dataloader.Result[[]*domain.Employee]{
-				Data: data,
-			})
-		}
-		return results
+		employees, err := a.findUseCase.Execute(departmentIDs)
+		return makeLoaderResults(employees, err, len(departmentIDs))
 	}
 
 	a.loader = dataloader.NewBatchedLoader(batchFn)

@@ -23,12 +23,12 @@ func (r *employeeResolver) Department(ctx context.Context, obj *domain.Employee)
 
 // Departments is the resolver for the departments field.
 func (r *queryResolver) Departments(ctx context.Context) ([]*domain.Department, error) {
-	return r.actions.AllDepartments()
+	return r.actions.AllDepartments(ctx)
 }
 
 // Employees is the resolver for the employees field.
 func (r *queryResolver) Employees(ctx context.Context) ([]*domain.Employee, error) {
-	return r.actions.AllEmployees()
+	return r.actions.AllEmployees(ctx)
 }
 
 // Department returns gen.DepartmentResolver implementation.

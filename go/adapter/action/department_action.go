@@ -13,7 +13,7 @@ import (
 
 // 部署に対するアクション
 type DepartmentAction interface {
-	AllDepartments() ([]*domain.Department, error)
+	AllDepartments(ctx context.Context) ([]*domain.Department, error)
 	LoadDepartment(ctx context.Context, id uint) (*domain.Department, error)
 }
 
@@ -36,7 +36,7 @@ func newDepartmentAction(db *sql.DB) *departmentAction {
 }
 
 // すべての部署を取得する
-func (a *departmentAction) AllDepartments() ([]*domain.Department, error) {
+func (a *departmentAction) AllDepartments(ctx context.Context) ([]*domain.Department, error) {
 	return a.findAllUseCase.Execute()
 }
 
@@ -46,16 +46,11 @@ func (a *departmentAction) LoadDepartment(ctx context.Context, id uint) (*domain
 	return thunk()
 }
 
+// データローダを初期化する
 func (a *departmentAction) initLoader() {
 	batchFn := func(ctx context.Context, ids []uint) []*dataloader.Result[*domain.Department] {
-		var results []*dataloader.Result[*domain.Department]
-		departments, _ := a.findUseCase.Execute(ids)
-		for _, data := range departments {
-			results = append(results, &dataloader.Result[*domain.Department]{
-				Data: data,
-			})
-		}
-		return results
+		departments, err := a.findUseCase.Execute(ids)
+		return makeLoaderResults(departments, err, len(ids))
 	}
 
 	a.loader = dataloader.NewBatchedLoader(batchFn)
