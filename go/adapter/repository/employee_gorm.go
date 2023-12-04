@@ -27,14 +27,14 @@ func (r *EmployeeGormRepository) FindAll() ([]*domain.Employee, error) {
 	return employees, nil
 }
 
-func (r *EmployeeGormRepository) FindByIDs(ids []uint) (map[uint]*domain.Employee, error) {
-	m := make(map[uint]*domain.Employee)
+func (r *EmployeeGormRepository) FindByDepartmentIDs(departmentIDs []uint) (map[uint][]*domain.Employee, error) {
+	m := make(map[uint][]*domain.Employee)
 	var employees []*domain.Employee
 
-	r.db.Find(&employees, ids)
+	r.db.Where("department_id IN ?", departmentIDs).Order("id").Find(&employees)
 
 	for _, v := range employees {
-		m[v.ID] = v
+		m[v.DepartmentID] = append(m[v.DepartmentID], v)
 	}
 
 	return m, nil

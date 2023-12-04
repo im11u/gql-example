@@ -9,5 +9,5 @@ type Employee struct {
 
 type EmployeeRepository interface {
 	FindAll() ([]*Employee, error)
-	FindByIDs(ids []uint) (map[uint]*Employee, error)
+	FindByDepartmentIDs(departmentIDs []uint) (map[uint][]*Employee, error)
 }
