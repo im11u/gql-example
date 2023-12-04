@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/im11u/gql-example/go/domain"
 	"github.com/im11u/gql-example/go/infrastructure/graph/gen"
@@ -14,7 +13,7 @@ import (
 
 // Employees is the resolver for the employees field.
 func (r *departmentResolver) Employees(ctx context.Context, obj *domain.Department) ([]*domain.Employee, error) {
-	panic(fmt.Errorf("not implemented: Employees - employees"))
+	return r.actions.LoadEmployees(ctx, obj.ID)
 }
 
 // Department is the resolver for the department field.
