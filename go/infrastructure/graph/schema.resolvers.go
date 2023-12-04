@@ -19,7 +19,7 @@ func (r *departmentResolver) Employees(ctx context.Context, obj *domain.Departme
 
 // Department is the resolver for the department field.
 func (r *employeeResolver) Department(ctx context.Context, obj *domain.Employee) (*domain.Department, error) {
-	panic(fmt.Errorf("not implemented: Department - department"))
+	return r.actions.LoadDepartment(ctx, obj.DepartmentID)
 }
 
 // Departments is the resolver for the departments field.
