@@ -26,3 +26,16 @@ func (r *DepartmentGormRepository) FindAll() ([]*domain.Department, error) {
 
 	return departments, nil
 }
+
+func (r *DepartmentGormRepository) FindByIDs(ids []uint) (map[uint]*domain.Department, error) {
+	m := make(map[uint]*domain.Department)
+	var departments []*domain.Department
+
+	r.db.Find(&departments, ids)
+
+	for _, v := range departments {
+		m[v.ID] = v
+	}
+
+	return m, nil
+}

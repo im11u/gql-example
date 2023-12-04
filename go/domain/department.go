@@ -8,4 +8,5 @@ type Department struct {
 
 type DepartmentRepository interface {
 	FindAll() ([]*Department, error)
+	FindByIDs(ids []uint) (map[uint]*Department, error)
 }
